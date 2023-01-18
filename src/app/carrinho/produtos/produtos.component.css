@@ -1,0 +1,16 @@
+h2{
+    text-align: center;
+   
+}
+.mat-expansion-panel-content {
+    display: flex;
+    overflow: visible;
+    flex-direction: row-reverse;
+}
+.mat-expansion-panel-header-description {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+   
+}

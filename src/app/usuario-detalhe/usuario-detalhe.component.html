@@ -1,0 +1,10 @@
+<h3>{{pageName}}</h3>
+<div>
+    <li *ngFor="let usuario of cadastroForm">
+      Nome: {{ usuario.nome }}
+      Email: {{ usuario.email }}
+      <!-- Vendedor: {{ usuario.admin }} -->
+      <!-- <a [routerLink]="[usuario._id]" routerLinkActive="router-link-active">Editar</a> -->
+      <button (click)="remover(usuario)">Remover</button>
+    </li>
+  </div>

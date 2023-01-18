@@ -6,5 +6,5 @@ bottom: 0;
 .mat-toolbar-single-row{
     justify-content: right;
     font-size: small;
-
+    bottom:0;
 }

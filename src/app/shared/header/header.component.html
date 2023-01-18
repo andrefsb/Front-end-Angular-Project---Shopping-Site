@@ -1,3 +1,22 @@
-<mat-toolbar>
-    Let's Buy
-</mat-toolbar>
+<div class="header" *ngIf="!loginValido">
+    <mat-toolbar>
+        <a mat-button routerLink="/login">Let's Buy Tech</a>
+        <div class="buttons">
+            <mat-icon routerLink="/login" >input</mat-icon>
+            <mat-icon routerLink="/cadastro">person_add</mat-icon>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="header" *ngIf="loginValido">
+    <mat-toolbar>
+        <a mat-button routerLink="/home">Let's Buy Tech</a>
+        <div class = "buttons">
+            <mat-icon routerLink="/usuarios/:{{loggedId}}">account_circle</mat-icon>
+            <mat-icon routerLink="/usuarios" *ngIf="loggedRole">people</mat-icon>
+            <mat-icon routerLink="/cadastro" *ngIf="loggedRole">person_add</mat-icon>
+            <mat-icon routerLink="/carrinho" *ngIf="!loggedRole">shopping_cart</mat-icon>
+            <mat-icon (click) = 'headerLogout()'>exit_to_app</mat-icon>
+        </div>
+    </mat-toolbar>
+</div>
