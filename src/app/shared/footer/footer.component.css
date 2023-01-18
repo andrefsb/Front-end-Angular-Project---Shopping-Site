@@ -1,0 +1,10 @@
+.mat-toolbar {
+position: absolute;
+bottom: 0;
+}
+
+.mat-toolbar-single-row{
+    justify-content: right;
+    font-size: small;
+
+}
