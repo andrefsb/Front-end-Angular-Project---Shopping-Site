@@ -21,19 +21,20 @@ export class CadastroUsuarioComponent {
   cadastroAuth: boolean = false;
   subscriptionCadastroAuth: Subscription;
 
+  usuario: Usuario = new Usuario("", "", "", "", false)
+
   constructor(
     private usuariosService: UsuariosService,
     private formBuilder: FormBuilder,
     private route: Router,
-    private authService: AuthService) 
-    {
-      this.subscriptionCadastroAuth = this.authService.cadastroAuthObservable.subscribe(
-        {
-          next: (cadastroAuth) => {
-            console.log('Autorizado cadastrar Adm:', cadastroAuth);
-            this.cadastroAuth = cadastroAuth;
-          }
-        })
+    private authService: AuthService) {
+    this.subscriptionCadastroAuth = this.authService.cadastroAuthObservable.subscribe(
+      {
+        next: (cadastroAuth) => {
+          // console.log('Autorizado cadastrar Adm:', cadastroAuth);
+          this.cadastroAuth = cadastroAuth;
+        }
+      })
   }
 
   cadastroForm = this.formBuilder.group({
@@ -44,26 +45,23 @@ export class CadastroUsuarioComponent {
   });
 
   onSubmit() {
-    const usuario = new Usuario(
-      this.cadastroForm.value.nome ?? '',
-      this.cadastroForm.value.email ?? '',
-      this.cadastroForm.value.senha ?? '',
-      '',
-      this.cadastroForm.value.admin ?? false
-    );
+    if (!this.cadastroForm.value.nome || !this.cadastroForm.value.email || !this.cadastroForm.value.senha) {
+      alert("Necessário preencher todos os campos.")
+    }
+    else {
+      this.usuario = new Usuario(
+        this.cadastroForm.value.nome ?? '',
+        this.cadastroForm.value.email ?? '',
+        this.cadastroForm.value.senha ?? '',
+        '',
+        this.cadastroForm.value.admin ?? false
+      );
 
-    // if (this.id) {
-    //   usuario._id = this.id;
-    //   usuario.admin = this.cadastroForm.value.admin ?? false;
-    //   this.usuariosService.atualizaUsuario(usuario).subscribe({
-    //     next: (retorno) => this.route.navigate(["/home"])
-    //   });
-    // } else {
-    this.usuariosService.adicionaUsuario(usuario).subscribe((retorno) => {
-      console.log(retorno);
-      console.log(usuario);
-      this.route.navigate(['/login']);
-    });
-    // }
+      this.usuariosService.adicionaUsuario(this.usuario).subscribe((retorno) => {
+        console.log(retorno);
+        this.route.navigate(['/login']);
+      });
+    }
   }
 }
+

@@ -22,7 +22,7 @@ export class UsuarioDetalheComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params["id"];
-    console.log('id na busca do usuario:', this.id)
+   /*  console.log('id na busca do usuario:', this.id) */
     if (this.id) {
       this.usuariosService.retornaUsuario(this.id).subscribe({
         next: (usuario) => {
@@ -35,8 +35,8 @@ export class UsuarioDetalheComponent implements OnInit {
   }
 
   remover(user: Usuario) {
-    console.log('User:',user)
-    this.usuariosService.removerUsuario(user);
+    // console.log('User removido:',user)
+    this.usuariosService.removerUsuario(user).subscribe();
     this.authService.logout();
   }
 }

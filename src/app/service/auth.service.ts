@@ -55,17 +55,22 @@ export class AuthService {
     }
     else if (!localStorage.getItem('token') && route.url[0].path.includes('cadastro') || route.url[0].path.includes('login')) {
     }
+
+    // else if (route.url[0].path.includes('carrinho') && this.role && localStorage.getItem('token')) {
+    //   console.log('Não há carrinho para vendedor.', this.role);
+    //   this.router.navigate(['/home']);
+    // }
     else {
       this.validaLogin(this.token).subscribe((retorno) => {
         this.loginValidoSource.next(true);
         console.log('Validado!');
-        console.log('Role:', (retorno as any).headers.get('x-roles'))
-        console.log('Retorno:', retorno);
-        console.log(route.url[0].toString());
+        // console.log('Role:', (retorno as any).headers.get('x-roles'))
+        // console.log('Retorno:', retorno);
+        // console.log(route.url[0].toString());
         this.role = (retorno as any).body.admin;
         this.id = (retorno as any).body._id;
-        console.log('this.role: ', this.role)
-        console.log('this.id: ', this.id)
+        // console.log('this.role: ', this.role)
+        // console.log('this.id: ', this.id)
         this.loggedRoleSource.next(this.role);
         this.loggedIdSource.next(this.id);
         this.cadastroAuthSource.next(this.role);
@@ -92,7 +97,7 @@ export class AuthService {
 
   limpaToken() {
     localStorage.removeItem('token')
-    console.log(localStorage.getItem('token'));
+    // console.log(localStorage.getItem('token'));
   }
 
   logout(): void {

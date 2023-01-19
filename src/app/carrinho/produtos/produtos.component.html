@@ -1,6 +1,87 @@
-<h2>Meu carrinho de compras</h2>
-<table  mat-table [dataSource]="produtosCarrinho" class="mat-elevation-z8" >
-    <ng-container matColumnDef="Nome" >
+<div class = 'carrinho' *ngIf="!loggedRole">
+
+    <h2>Meu carrinho de compras</h2>
+    <table mat-table [dataSource]="produtosCarrinho" class="mat-elevation-z8">
+        <ng-container matColumnDef="Nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let produto">{{produto.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Quantidade em Estoque">
+            <th mat-header-cell *matHeaderCellDef>Quantidade em Estoque</th>
+            <td mat-cell *matCellDef="let produto">{{produto.quantidadeEstoque}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Quantidade no Carrinho">
+            <th mat-header-cell *matHeaderCellDef>Quantidade no Carrinho</th>
+            <td mat-cell *matCellDef="let produto">{{produto.quantidadeCompra}}</td>
+        </ng-container>
+
+        <div class="button-container">
+            <ng-container matColumnDef="plus">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let produto">
+
+                    <button mat-mini-fab color="warn" aria-label="Icon button with a plus one icon"
+                        (click)="plusProduct(this.produto)">
+                        +1
+                    </button>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="minus">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let produto">
+
+                    <button mat-mini-fab color="warn" aria-label="Icon button with a subtract one icon"
+                        (click)="minusProduct(this.produto)">
+                        -1
+                    </button>
+
+                </td>
+            </ng-container>
+        </div>
+
+        <ng-container matColumnDef="Preco">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let produto">{{produto.preco * produto.quantidadeCompra | currency}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Ver">
+            <th mat-header-cell *matHeaderCellDef>Ver</th>
+            <td mat-cell *matCellDef="let produto">
+                <button mat-button routerLink="/produto/{{produto.id}}">Detalhes</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunasExibidas;"></tr>
+
+    </table>
+
+    <div class="finalizar-container">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Total: {{total | currency}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelOpenState ? 'Fechar' : 'Abrir'}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <button class="finalizar-button">Finalizar</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+
+<div class = 'inventario' *ngIf="loggedRole">
+<h2>Inventário</h2>
+<table mat-table [dataSource]="produtos" class="mat-elevation-z8">
+    <ng-container matColumnDef="Nome">
         <th mat-header-cell *matHeaderCellDef>Nome</th>
         <td mat-cell *matCellDef="let produto">{{produto.nome}}</td>
     </ng-container>
@@ -10,18 +91,18 @@
         <td mat-cell *matCellDef="let produto">{{produto.quantidadeEstoque}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Quantidade no Carrinho">
-        <th mat-header-cell *matHeaderCellDef>Quantidade no Carrinho</th>
-        <td mat-cell *matCellDef="let produto">{{produto.quantidadeCompra}}</td>
+    <ng-container matColumnDef="Nova Quantidade">
+        <th mat-header-cell *matHeaderCellDef>Nova Quantidade</th>
+        <td mat-cell *matCellDef="let produto">{{produto.quantidadeEstoque}}</td>
     </ng-container>
 
-    <div class="button-container">
+    <!-- <div class="button-container">
         <ng-container matColumnDef="plus">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let produto">
 
                 <button mat-mini-fab color="warn" aria-label="Icon button with a plus one icon"
-                    (click)="plusProduct(this.produto)">
+                    (click)="reporEstoque(this.produto)">
                     +1
                 </button>
 
@@ -33,17 +114,22 @@
             <td mat-cell *matCellDef="let produto">
 
                 <button mat-mini-fab color="warn" aria-label="Icon button with a subtract one icon"
-                    (click)="minusProduct(this.produto)">
+                    (click)="reduzirEstoque(this.produto)">
                     -1
                 </button>
 
             </td>
         </ng-container>
-    </div>
+    </div> -->
 
     <ng-container matColumnDef="Preco">
         <th mat-header-cell *matHeaderCellDef>Valor</th>
-        <td mat-cell *matCellDef="let produto">{{produto.preco * produto.quantidadeCompra | currency}}</td>
+        <td mat-cell *matCellDef="let produto">{{produto.preco | currency}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Novo Preco">
+        <th mat-header-cell *matHeaderCellDef>Novo Preço</th>
+        <td mat-cell *matCellDef="let produto">{{produto.preco | currency}}</td>
     </ng-container>
 
     <ng-container matColumnDef="Ver">
@@ -53,24 +139,15 @@
         </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
-    <tr mat-row *matRowDef="let row; columns: colunasExibidas;"></tr>
+    <ng-container matColumnDef="Editar">
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <td mat-cell *matCellDef="let produto">
+            <button mat-button routerLink="/produto/{{produto.id}}">Salvar alteração</button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunasExibidasVendedor"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunasExibidasVendedor;"></tr>
 
 </table>
-
-<div class="finalizar-container">
-<mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Total: {{total | currency}}
-      </mat-panel-title>
-      <mat-panel-description>
-         {{panelOpenState ? 'Fechar' : 'Abrir'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <button class = "finalizar-button">Finalizar</button>
-  </mat-expansion-panel>
-</mat-accordion>
 </div>

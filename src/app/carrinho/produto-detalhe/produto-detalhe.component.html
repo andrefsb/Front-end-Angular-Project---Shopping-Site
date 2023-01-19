@@ -1,1 +1,6 @@
-<p>produto-detalhe works!</p>
+<p>{{produto.nome}}</p>
+<p>Preço: {{produto.preco | currency}}</p>
+<p>Disponível: {{produto.quantidadeEstoque}}</p>
+<p *ngIf="!loggedRole">Quantidade: {{produto.quantidadeCompra}}</p>
+<p *ngIf="!loggedRole">Total: {{produto.quantidadeCompra*produto.preco| currency}}</p>
+

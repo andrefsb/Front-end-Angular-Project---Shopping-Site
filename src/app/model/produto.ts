@@ -5,12 +5,15 @@ export default class Produto {
     quantidadeEstoque: number=0;
     quantidadeCompra: number =0;
     descricao: string ="";
+    imagem: string='';
 
-    constructor(nome: string, preco: number, quantidadeEstoque: number,  descricao: string, quantidadeCompra: number){
+    constructor(nome: string, preco: number, quantidadeEstoque: number,  descricao: string, quantidadeCompra: number, imagem:string){
         this.nome = nome;
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
         this.quantidadeCompra=quantidadeCompra;
         this.descricao=descricao;
+        this.descricao=descricao;
+        this.imagem=imagem;
     }
 }

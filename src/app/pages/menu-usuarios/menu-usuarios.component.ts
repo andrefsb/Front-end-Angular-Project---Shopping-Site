@@ -27,7 +27,7 @@ export class MenuUsuariosComponent implements OnInit {
     this.subscriptionLoggedId = this.authService.loggedIdObservable.subscribe(
       {
         next: (loggedId) => {
-          console.log('Id logado:', loggedId);
+          // console.log('Id logado:', loggedId);
           this.loggedId = loggedId;
         }
       })
@@ -52,7 +52,7 @@ export class MenuUsuariosComponent implements OnInit {
       )
       .subscribe((usuarios) => (this.usuarios = usuarios));
 
-    console.log('Lista de usuarios:', this.usuarios.toString())
+    // console.log('Lista de usuarios:', this.usuarios.toString())
   }
 
   remover(user: Usuario) {

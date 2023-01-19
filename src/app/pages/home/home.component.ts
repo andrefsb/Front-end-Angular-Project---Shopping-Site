@@ -8,6 +8,5 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
 pageName: string = "Home";
-loginLink: boolean = false;
 
 }

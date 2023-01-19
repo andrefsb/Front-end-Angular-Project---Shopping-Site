@@ -1,5 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import Produto from 'src/app/model/produto';
+import { AuthService } from 'src/app/service/auth.service';
 import { ProdutosService } from 'src/app/service/produtos.service';
 
 
@@ -11,22 +13,35 @@ import { ProdutosService } from 'src/app/service/produtos.service';
 export class ProdutosComponent implements OnInit {
 
 
-  total: number=0;
-  
+  total: number = 0;
+
   produtos: Produto[] = [];
   produtosCarrinho: Produto[] = [];
 
-  colunasExibidas: string[] = ["Nome", "Quantidade em Estoque", "Quantidade no Carrinho", "plus", "minus", "Preco", "Ver"]
-  panelOpenState: boolean=false;
-  
+  loggedRole: boolean = false;
+  subscriptionLoggedRole: Subscription;
 
-  constructor(private produtosService: ProdutosService) {
+  colunasExibidas: string[] = ["Nome", "Quantidade em Estoque", "Quantidade no Carrinho", "plus", "minus", "Preco", "Ver"]
+  panelOpenState: boolean = false;
+
+  colunasExibidasVendedor: string[] = ["Nome", "Quantidade em Estoque","Nova Quantidade", "Preco","Novo Preco", "Editar","Ver"]
+
+
+  constructor(private produtosService: ProdutosService, private authService: AuthService) {
+    this.subscriptionLoggedRole = this.authService.loggedRoleObservable.subscribe(
+      {
+        next: (loggedRole) => {
+          // console.log('Admin:', loggedRole);
+          this.loggedRole = loggedRole;
+        }
+      })
   }
+
 
 
   ngOnInit(): void {
     this.produtos = Array.from(this.produtosService.carregaProdutos());
-    this.produtosCarrinho = this.produtos.filter(row => row.quantidadeCompra>= 1);
+    this.produtosCarrinho = this.produtos.filter(row => row.quantidadeCompra >= 1);
     this.total = this.totalCarrinho();
   }
 
@@ -38,6 +53,18 @@ export class ProdutosComponent implements OnInit {
         produto.quantidadeEstoque--;
         this.totalCarrinho();
       }
+
+  }
+
+  reporEstoque(produto: Produto): void {
+    produto.quantidadeEstoque++;
+
+  }
+
+  reduzirEstoque(produto: Produto): void {
+    if (produto.quantidadeEstoque >0)
+    produto.quantidadeEstoque--;
+
   }
 
   minusProduct(produto: Produto): void {
@@ -46,18 +73,18 @@ export class ProdutosComponent implements OnInit {
         produto.quantidadeCompra--;
         produto.quantidadeEstoque++;
       }
-      this.totalCarrinho();
+    this.totalCarrinho();
   }
 
 
   totalCarrinho(): any {
-    this.total=0;
+    this.total = 0;
     this.produtos.forEach(produto => {
-      if(produto.quantidadeCompra){
-      this.total = this.total + produto.quantidadeCompra * produto.preco;
+      if (produto.quantidadeCompra) {
+        this.total = this.total + produto.quantidadeCompra * produto.preco;
       }
     });
-      return this.total;
+    return this.total;
 
   }
 

@@ -27,7 +27,7 @@ export class HeaderComponent {
     this.subscriptionLoginValido = this.authService.loginValidoObservable.subscribe(
       {
         next: (loginValido) => {
-          console.log('Logado:', loginValido);
+          // console.log('Logado:', loginValido);
           this.loginValido = loginValido;
         }
       }),
@@ -35,14 +35,14 @@ export class HeaderComponent {
       this.subscriptionLoggedRole = this.authService.loggedRoleObservable.subscribe(
         {
           next: (loggedRole) => {
-            console.log('Admin:', loggedRole);
+            // console.log('Admin:', loggedRole);
             this.loggedRole = loggedRole;
           }
         }),
       this.subscriptionLoggedId = this.authService.loggedIdObservable.subscribe(
         {
           next: (loggedId) => {
-            console.log('Id logado:', loggedId);
+            // console.log('Id logado:', loggedId);
             this.loggedId = loggedId;
           }
         });
