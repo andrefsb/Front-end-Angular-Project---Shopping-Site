@@ -12,7 +12,7 @@
     <mat-toolbar>
         <a mat-button routerLink="/home">Let's Buy Tech</a>
         <div class = "buttons">
-            <mat-icon routerLink="/usuarios/:{{loggedId}}">account_circle</mat-icon>
+            <mat-icon routerLink="/usuarios/{{loggedId}}">account_circle</mat-icon>
             <mat-icon routerLink="/usuarios" *ngIf="loggedRole">people</mat-icon>
             <mat-icon routerLink="/cadastro" *ngIf="loggedRole">person_add</mat-icon>
             <mat-icon routerLink="/carrinho" *ngIf="!loggedRole">shopping_cart</mat-icon>

@@ -23,7 +23,7 @@ export class UsuariosService {
       headers: this.authService.buildHeaders(),
     });
 
-  retornaUsuario = (id: String) =>
+    retornaUsuario = (id: String) =>
     this.http.get<Usuario>(`http://localhost:5000/usuarios/${id}`, {
       headers: this.authService.buildHeaders(),
     });

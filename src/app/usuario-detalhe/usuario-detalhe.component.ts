@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UsuariosService } from './../service/usuarios.service';
 import { Component, OnInit } from '@angular/core';
 import Usuario from '../model/usuario';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-usuario-detalhe',
@@ -11,32 +10,24 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./usuario-detalhe.component.css']
 })
 export class UsuarioDetalheComponent implements OnInit {
-  id: any;
-  activatedRoute: any;
-  cadastroForm: any;
+  userForm: any;
   formBuilder: any;
- 
+  ActivatedRoute: any;
+  usuario: Usuario = new Usuario("","","","",false);
 
-  constructor(private usuariosService: UsuariosService, private route: ActivatedRoute, private authService:AuthService) { }
-    
-
+  id: string = '';
   pageName: string = "Seu Usuário"
-  usuarios: Usuario[] = [];
 
+  constructor(private usuariosService: UsuariosService, private authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit() {
-    console.log('Id no OnInit cadastro-usuario: ', this.id)
-
+  ngOnInit(): void {
+    this.id = this.activatedRoute.snapshot.params["id"];
+    console.log('id na busca do usuario:', this.id)
     if (this.id) {
       this.usuariosService.retornaUsuario(this.id).subscribe({
         next: (usuario) => {
           console.log(usuario);
-          this.cadastroForm = this.formBuilder.group({
-            nome: usuario.nome,
-            email: usuario.email,
-            senha: '',
-            admin: usuario.admin,
-          });
+          this.usuario = usuario;
         },
         error: (error) => console.error(error)
       })
@@ -44,13 +35,8 @@ export class UsuarioDetalheComponent implements OnInit {
   }
 
   remover(user: Usuario) {
-    this.usuariosService.removerUsuario(user).subscribe({
-      next: () => {
-        this.usuarios = this.usuarios.filter(
-          (usuario) => usuario._id != user._id
-        );
-      },
-    });
+    console.log('User:',user)
+    this.usuariosService.removerUsuario(user);
     this.authService.logout();
   }
 }

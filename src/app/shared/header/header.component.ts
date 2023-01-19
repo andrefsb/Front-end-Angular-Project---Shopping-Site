@@ -1,7 +1,7 @@
 import { UsuariosService } from './../../service/usuarios.service';
 import { AuthService } from 'src/app/service/auth.service';
-import { Component, NgModule, OnInit } from '@angular/core';
-import { Router, RouterModule, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +23,7 @@ export class HeaderComponent {
   loggedId: string = '';
 
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private usuariosService: UsuariosService) {
+  constructor(private authService: AuthService) {
     this.subscriptionLoginValido = this.authService.loginValidoObservable.subscribe(
       {
         next: (loginValido) => {
