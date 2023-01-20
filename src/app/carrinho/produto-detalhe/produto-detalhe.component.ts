@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class ProdutoDetalheComponent {
 
   id: number = 0;
-  produto: Produto = new Produto('', 0, 0, '', 0, '')
+  produto: Produto = new Produto(0, '', 0, 0, 0, '', '')
   loggedRole: boolean = false;
   subscriptionLoggedRole: Subscription;
 
@@ -39,9 +39,6 @@ export class ProdutoDetalheComponent {
       this.router.navigate(['/home']);
     }
   }
-
-
-
 
 
 }
