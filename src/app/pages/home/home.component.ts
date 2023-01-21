@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.produtos = Array.from(this.produtosService.carregaProdutos());
+    this.produtos = Array.from(this.produtosService.getProdutos());
 
   }
 

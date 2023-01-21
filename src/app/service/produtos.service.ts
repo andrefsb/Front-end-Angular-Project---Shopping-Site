@@ -9,6 +9,7 @@ export class ProdutosService {
   produto: Produto = new Produto(0, '', 0, 0, 0, '', '')
   ok: boolean = true;
 
+  // produtosDsp: Set<Produto> = new Set<Produto>();
   produtos: Set<Produto> = new Set<Produto>().add({
     id: 1,
     nome: "Mouse",
@@ -23,7 +24,7 @@ export class ProdutosService {
     id: 2,
     nome: "Teclado",
     preco: 35,
-    quantidadeEstoque: 2,
+    quantidadeEstoque: 4,
     quantidadeCompra: 0,
     descricao: "Teclado para computador, entrada USB.",
     imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
@@ -33,7 +34,7 @@ export class ProdutosService {
     id: 3,
     nome: "Headphone",
     preco: 80.99,
-    quantidadeEstoque: 9,
+    quantidadeEstoque: 17,
     quantidadeCompra: 0,
     descricao: "Headphone bluetooth.",
     imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
@@ -42,7 +43,7 @@ export class ProdutosService {
 
   constructor() { }
 
-  carregaProdutos = () => this.produtos;
+  getProdutos = () => this.produtos;
 
   lastId() {
     return this.produtos.size + 1;
@@ -71,12 +72,56 @@ export class ProdutosService {
     return this.ok;
   }
 
-  delete(produto: Produto){
+  delete(produto: Produto) {
     this.produtos.delete(produto);
   }
 
-  removerProdutos(compra:any){
+  removerProdutos(compra: any) {
 
   }
 
+
+  //   this.produtosDsp = JSON.parse(localStorage.getItem('disponivel') || "[]");
+  //   if(this.produtosDsp.size==undefined || this.produtosDsp.size==0){
+      // this.produtos.add({
+      //   id: 1,
+      //   nome: "Mouse",
+      //   preco: 20,
+      //   quantidadeEstoque: 4,
+      //   quantidadeCompra: 0,
+      //   descricao: "Mouse óptico para computador, entrada USB.",
+      //   imagem: 'https://img.kalunga.com.br/fotosdeprodutos/436527d.jpg'
+
+      // }).add({
+
+      //   id: 2,
+      //   nome: "Teclado",
+      //   preco: 35,
+      //   quantidadeEstoque: 2,
+      //   quantidadeCompra: 0,
+      //   descricao: "Teclado para computador, entrada USB.",
+      //   imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
+
+      // }).add({
+
+      //   id: 3,
+      //   nome: "Headphone",
+      //   preco: 80.99,
+      //   quantidadeEstoque: 9,
+      //   quantidadeCompra: 0,
+      //   descricao: "Headphone bluetooth.",
+      //   imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
+
+      // });
+
+  //   }
+  //   else{
+  //     this.produtos=this.produtosDsp;
+
+  //   }
+  //   console.log('this.produtos:',this.produtos)
+  //   return this.produtos;
+  // }
 }
+
+

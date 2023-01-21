@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarrinhoService } from './../../service/carrinho.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -29,6 +30,7 @@ export class ProdutosComponent implements OnInit {
 
   subscriptionLoggedId: Subscription;
 
+
   loggedId: string = '';
 
   id: number = 0;
@@ -49,7 +51,7 @@ export class ProdutosComponent implements OnInit {
     imagem: ''
   });
 
-  constructor(private produtosService: ProdutosService, private authService: AuthService, private formBuilder: FormBuilder, private carrinhoService: CarrinhoService) {
+  constructor(private produtosService: ProdutosService, private authService: AuthService, private formBuilder: FormBuilder, private carrinhoService: CarrinhoService, private router:Router) {
     this.subscriptionLoggedRole = this.authService.loggedRoleObservable.subscribe(
       {
         next: (loggedRole) => {
@@ -61,12 +63,8 @@ export class ProdutosComponent implements OnInit {
         {
           next: (loggedId) => {
             this.loggedId = loggedId;
-            if (!this.loggedRole) {
-              this.produtosClone = [...this.produtos];
-              console.log('LoggedId no load carrinho:',this.loggedId)
-              this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId);
-              console.log('Carrinho em local:', this.produtosCarrinho)
-              this.total = this.totalCarrinho();
+            if(this.router.url === '/carrinho'){
+              this.validCarrinho();
             }
           }
         });
@@ -74,7 +72,7 @@ export class ProdutosComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.produtos = Array.from(this.produtosService.carregaProdutos());
+    this.produtos = Array.from(this.produtosService.getProdutos());
     this.totalProdutos = this.produtos.length;
     
 
@@ -170,7 +168,7 @@ export class ProdutosComponent implements OnInit {
     }
     if (okForm && novoProduto.preco > 0) {
       var okProd = this.produtosService.post(novoProduto);
-      this.produtos = Array.from(this.produtosService.carregaProdutos());
+      this.produtos = Array.from(this.produtosService.getProdutos());
       this.totalProdutos = this.produtos.length;
     }
     console.log(novoProduto);
@@ -188,11 +186,21 @@ export class ProdutosComponent implements OnInit {
     if (this.produtosCarrinho.length >= 1) {
       console.log('Compra Finalizada!', this.produtosCarrinho);
       this.produtos = this.produtosClone;
-      console.log('Em estoque:', this.produtosService.carregaProdutos())
+      console.log('Em estoque:', this.produtosService.getProdutos())
     }
     else {
       console.log('Seu carrinho está vazio!', this.produtosCarrinho);
       alert("Seu carrinho está vazio!")
+    }
+  }
+
+  validCarrinho(){
+    if (!this.loggedRole) {
+      this.produtosClone = [...this.produtos];
+      console.log('LoggedId no load carrinho:',this.loggedId)
+      this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId);
+      console.log('Carrinho em local:', this.produtosCarrinho)
+      this.total = this.totalCarrinho();
     }
   }
 

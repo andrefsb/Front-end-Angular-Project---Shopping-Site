@@ -22,8 +22,6 @@ export class ProdutoDetalheComponent {
   produtosCarrinho: Produto[] = [];
   subscriptionLoggedId: Subscription;
 
-  produtoFinal: Produto = new Produto(0, '', 0, 0, 0, '', '')
-
   loggedId: string = '';
 
 
@@ -40,30 +38,14 @@ export class ProdutoDetalheComponent {
         next: (loggedId) => {
           this.loggedId = loggedId;
           this.id = this.activatedRoute.snapshot.params["id"];
-          this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId);
-          console.log('Id do produto:', this.id)
-          console.log('quantidade carrinho:', this.produtosCarrinho)
-
-          if (this.id) {
-            this.produto = this.produtosService.retornaProduto(this.id);
-            this.produtoCarrinho = this.carrinhoService.retornaProdutoCarrinho(this.loggedId, this.id)
-            this.quantidadeCarrinho = this.produtoCarrinho.quantidadeCompra;
-
-            if (this.quantidadeCarrinho > this.produto.quantidadeEstoque) {
-              this.quantidadeCarrinho = this.produto.quantidadeEstoque;
-            }
-          }
-          else {
-            this.router.navigate(['/home']);
+          console.log('this.id page:',this.id)
+          if (this.router.url.includes('produto')) {
+            this.validProduto();
           }
         }
       });
   }
 
-
-  ngOnInit(): void {
-
-  }
 
   plusProduct(produto: Produto): void {
     if (produto.quantidadeEstoque !== undefined && this.quantidadeCarrinho !== undefined) {
@@ -88,6 +70,30 @@ export class ProdutoDetalheComponent {
       this.carrinhoService.atualizarCarrinho(this.loggedId, this.produtosCarrinho, this.produto.id, this.quantidadeCarrinho, this.produto.nome, this.produto.quantidadeEstoque, this.produto.preco, this.produto.descricao, this.produto.imagem);
       alert(this.quantidadeCarrinho + 'x ' + this.produto.nome + ' adicionado ao seu carrinho!')
     }
+  }
+
+  validProduto() {
+    
+    this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId);
+    console.log('VALIDPRODUTO')
+    console.log('quantidade carrinho:', this.produtosCarrinho)
+
+    if (this.id) {
+      this.produto = { ...this.produtosService.retornaProduto(this.id) };
+      this.produtoCarrinho = this.carrinhoService.retornaProdutoCarrinho(this.loggedId, this.id)
+      this.quantidadeCarrinho = this.produtoCarrinho.quantidadeCompra;
+
+      if (this.quantidadeCarrinho > this.produto.quantidadeEstoque) {
+        this.quantidadeCarrinho = this.produto.quantidadeEstoque;
+      }
+      else {
+        this.produto.quantidadeEstoque = this.produto.quantidadeEstoque - this.produtoCarrinho.quantidadeCompra
+      }
+    }
+    else {
+      this.router.navigate(['/home']);
+    }
+
   }
 
 
