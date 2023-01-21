@@ -14,7 +14,7 @@ export class ProdutosService {
     nome: "Mouse",
     preco: 20,
     quantidadeEstoque: 4,
-    quantidadeCompra: 1,
+    quantidadeCompra: 0,
     descricao: "Mouse óptico para computador, entrada USB.",
     imagem: 'https://img.kalunga.com.br/fotosdeprodutos/436527d.jpg'
 
@@ -24,7 +24,7 @@ export class ProdutosService {
     nome: "Teclado",
     preco: 35,
     quantidadeEstoque: 2,
-    quantidadeCompra: 1,
+    quantidadeCompra: 0,
     descricao: "Teclado para computador, entrada USB.",
     imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
 
@@ -75,7 +75,8 @@ export class ProdutosService {
     this.produtos.delete(produto);
   }
 
+  removerProdutos(compra:any){
 
-
+  }
 
 }

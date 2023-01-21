@@ -1,6 +1,19 @@
 <p>{{produto.nome}}</p>
 <p>Preço: {{produto.preco | currency}}</p>
 <p>Disponível: {{produto.quantidadeEstoque}}</p>
-<p *ngIf="!loggedRole">Quantidade: {{produto.quantidadeCompra}}</p>
-<p *ngIf="!loggedRole">Total: {{produto.quantidadeCompra*produto.preco| currency}}</p>
+<p *ngIf="!loggedRole">Quantidade: {{quantidadeCarrinho}}</p>
+<p *ngIf="!loggedRole">Total: {{quantidadeCarrinho*produto.preco| currency}}</p>
 
+<div class="button-container">
+
+
+    <button *ngIf="!loggedRole" mat-mini-fab color="warn" aria-label="Icon button with a plus one icon" (click)="plusProduct(this.produto)">
+        +1
+    </button>
+
+
+    <button *ngIf="!loggedRole" mat-mini-fab color="warn" aria-label="Icon button with a subtract one icon"(click)="minusProduct(this.produto)">
+        -1
+    </button>
+
+    <button class="adicionar-button"  *ngIf="!loggedRole"(click)="enviaItemCarrinho()">Adicionar ao Carrinho</button>

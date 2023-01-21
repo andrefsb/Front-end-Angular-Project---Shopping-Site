@@ -19,6 +19,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UsuarioDetalheComponent } from './usuario-detalhe/usuario-detalhe.component';
 import { MenuUsuariosComponent } from './pages/menu-usuarios/menu-usuarios.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -56,7 +57,8 @@ component: RoutingComponent
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule
 
   ],
   providers: [],

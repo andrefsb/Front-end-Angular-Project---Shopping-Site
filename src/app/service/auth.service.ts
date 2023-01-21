@@ -44,16 +44,20 @@ export class AuthService {
       this.loginValidoSource.next(false);
       console.log('Acesso Negado!');
       this.router.navigate(['/login']);
+
     }
     else if (route.url[0].path.includes('cadastro') && !this.role && localStorage.getItem('token')) {
       console.log('Você não pode cadastrar novos usuários.', this.role);
       this.router.navigate(['/home']);
+
     }
     else if (localStorage.getItem('token') && route.url[0].path.includes('login')) {
       console.log('Você já está logado!', this.role);
       this.router.navigate(['/home']);
+
     }
     else if (!localStorage.getItem('token') && route.url[0].path.includes('cadastro') || route.url[0].path.includes('login')) {
+
     }
 
     // else if (route.url[0].path.includes('carrinho') && this.role && localStorage.getItem('token')) {
@@ -69,8 +73,8 @@ export class AuthService {
         // console.log(route.url[0].toString());
         this.role = (retorno as any).body.admin;
         this.id = (retorno as any).body._id;
-        // console.log('this.role: ', this.role)
-        // console.log('this.id: ', this.id)
+        console.log('this.role: ', this.role)
+        console.log('this.id: ', this.id)
         this.loggedRoleSource.next(this.role);
         this.loggedIdSource.next(this.id);
         this.cadastroAuthSource.next(this.role);
@@ -112,5 +116,13 @@ export class AuthService {
         console.error("Erro ao fazer o logout", e)
       }
     })
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  getRole() {
+    return this.role;
   }
 }
