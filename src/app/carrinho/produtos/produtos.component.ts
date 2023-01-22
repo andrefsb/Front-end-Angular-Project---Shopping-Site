@@ -44,9 +44,19 @@ export class ProdutosComponent{
   colunasExibidas: string[] = ["Nome", "Quantidade em Estoque", "Quantidade no Carrinho", "plus", "minus", "Preco", "Ver"]
   panelOpenState: boolean = false;
 
-  colunasExibidasVendedor: string[] = ["Nome", "Quantidade em Estoque", "Nova Quantidade", "Preco", "Novo Preco", "Editar", "Ver"]
+  colunasExibidasVendedor: string[] = ["Nome", "Quantidade em Estoque",  "Preco", "Editar", "Ver"]
 
   cadastroForm = this.formBuilder.group({
+    id: 0,
+    nome: '',
+    preco: 0,
+    quantidadeEstoque: 0,
+    quantidadeCompra: 0,
+    descricao: '',
+    imagem: ''
+  });
+
+  atualizaForm = this.formBuilder.group({
     id: 0,
     nome: '',
     preco: 0,
@@ -145,10 +155,10 @@ export class ProdutosComponent{
   validCarrinho() {
     this.produtos = Array.from(this.produtosService.getProdutos());
     this.produtosClone=[];
-    console.log('produtos.service produtos:', Array.from(this.produtosService.getProdutos()));
+    // console.log('produtos.service produtos:', Array.from(this.produtosService.getProdutos()));
     if (!this.loggedRole) {
       this.produtosClone = this.produtos.map(x => Object.assign({}, x));
-      console.log('Clone antes:', this.produtosClone)
+      // console.log('Clone antes:', this.produtosClone)
       // console.log('LoggedId no load carrinho:', this.loggedId)
       this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId).map((x: any) => Object.assign({}, x));
       this.produtosCarrinho.forEach(prodcar => {
@@ -165,7 +175,7 @@ export class ProdutosComponent{
           
         });
       });
-      console.log('Clone depois:', this.produtosClone)
+      // console.log('Clone depois:', this.produtosClone)
       this.total = this.totalCarrinho();
     }
     else {
@@ -176,18 +186,16 @@ export class ProdutosComponent{
   }
 
 
+  // reporEstoque(produto: Produto): void {
+  //   produto.quantidadeEstoque++;
 
+  // }
 
-  reporEstoque(produto: Produto): void {
-    produto.quantidadeEstoque++;
+  // reduzirEstoque(produto: Produto): void {
+  //   if (produto.quantidadeEstoque > 0)
+  //     produto.quantidadeEstoque--;
 
-  }
-
-  reduzirEstoque(produto: Produto): void {
-    if (produto.quantidadeEstoque > 0)
-      produto.quantidadeEstoque--;
-
-  }
+  // }
 
 
   salvarAlteracao(produto: Produto) {
