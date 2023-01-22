@@ -41,17 +41,19 @@ export class CarrinhoService {
   salvarCarrinho(key: string, value: any) {
     value = JSON.stringify(value);
     localStorage.setItem(key, value);
-    console.log('salvar local Storage:', key,value)
+    // console.log('salvar local Storage:', key,value)
   }
 
   retornaProdutoCarrinho(key: string, id: number) {
     this.produtosCarrinho = this.getCarrinho(key);
+    // console.log('this.produtosCarrinho',this.produtosCarrinho)
 
     this.produtosCarrinho.forEach(prod => {
       if (prod.id == id) {
         this.produtoCarrinho = prod;
       }
     });
+    // console.log('this.produtoCarrinho',this.produtoCarrinho)
     return this.produtoCarrinho;
   }
 }

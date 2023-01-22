@@ -38,7 +38,7 @@ export class ProdutoDetalheComponent {
         next: (loggedId) => {
           this.loggedId = loggedId;
           this.id = this.activatedRoute.snapshot.params["id"];
-          console.log('this.id page:',this.id)
+          // console.log('this.id page:', this.id)
           if (this.router.url.includes('produto')) {
             this.validProduto();
           }
@@ -66,29 +66,37 @@ export class ProdutoDetalheComponent {
 
   }
   enviaItemCarrinho() {
+    this.carrinhoService.atualizarCarrinho(this.loggedId, this.produtosCarrinho, this.produto.id, this.quantidadeCarrinho, this.produto.nome, this.produto.quantidadeEstoque, this.produto.preco, this.produto.descricao, this.produto.imagem);
     if (this.quantidadeCarrinho > 0) {
-      this.carrinhoService.atualizarCarrinho(this.loggedId, this.produtosCarrinho, this.produto.id, this.quantidadeCarrinho, this.produto.nome, this.produto.quantidadeEstoque, this.produto.preco, this.produto.descricao, this.produto.imagem);
       alert(this.quantidadeCarrinho + 'x ' + this.produto.nome + ' adicionado ao seu carrinho!')
+    }
+    else {
+      alert(this.produto.nome + ' removido do seu carrinho!')
     }
   }
 
   validProduto() {
-    
+
     this.produtosCarrinho = this.carrinhoService.getCarrinho(this.loggedId);
-    console.log('VALIDPRODUTO')
-    console.log('quantidade carrinho:', this.produtosCarrinho)
+    // console.log('VALIDPRODUTO')
+    // console.log('produtos carrinho:', this.produtosCarrinho)
 
     if (this.id) {
       this.produto = { ...this.produtosService.retornaProduto(this.id) };
       this.produtoCarrinho = this.carrinhoService.retornaProdutoCarrinho(this.loggedId, this.id)
+      if(this.produtoCarrinho.id != this.produto.id){
+        // console.log('NOT FOUND')
+        this.produtoCarrinho = this.produto;
+      }
       this.quantidadeCarrinho = this.produtoCarrinho.quantidadeCompra;
+      // console.log('this.produtoCarrinho',this.produtoCarrinho)
+      // console.log('this.quantidadeCarrinho',this.quantidadeCarrinho)
 
       if (this.quantidadeCarrinho > this.produto.quantidadeEstoque) {
         this.quantidadeCarrinho = this.produto.quantidadeEstoque;
       }
-      else {
-        this.produto.quantidadeEstoque = this.produto.quantidadeEstoque - this.produtoCarrinho.quantidadeCompra
-      }
+      
+      this.produto.quantidadeEstoque = this.produto.quantidadeEstoque-this.quantidadeCarrinho;
     }
     else {
       this.router.navigate(['/home']);

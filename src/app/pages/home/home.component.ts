@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.produtos = Array.from(this.produtosService.getProdutos());
+    this.produtos = Array.from(this.produtosService.getProdutos()).map(x => Object.assign({}, x));;
+    console.log(this.produtos)
 
   }
 

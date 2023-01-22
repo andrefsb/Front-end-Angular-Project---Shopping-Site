@@ -9,12 +9,13 @@ export class ProdutosService {
   produto: Produto = new Produto(0, '', 0, 0, 0, '', '')
   ok: boolean = true;
 
-  // produtosDsp: Set<Produto> = new Set<Produto>();
+  produtosClone: Set<Produto> = new Set<Produto>();
+
   produtos: Set<Produto> = new Set<Produto>().add({
     id: 1,
     nome: "Mouse",
     preco: 20,
-    quantidadeEstoque: 4,
+    quantidadeEstoque: 7,
     quantidadeCompra: 0,
     descricao: "Mouse óptico para computador, entrada USB.",
     imagem: 'https://img.kalunga.com.br/fotosdeprodutos/436527d.jpg'
@@ -24,7 +25,7 @@ export class ProdutosService {
     id: 2,
     nome: "Teclado",
     preco: 35,
-    quantidadeEstoque: 4,
+    quantidadeEstoque: 6,
     quantidadeCompra: 0,
     descricao: "Teclado para computador, entrada USB.",
     imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
@@ -34,7 +35,7 @@ export class ProdutosService {
     id: 3,
     nome: "Headphone",
     preco: 80.99,
-    quantidadeEstoque: 17,
+    quantidadeEstoque: 5,
     quantidadeCompra: 0,
     descricao: "Headphone bluetooth.",
     imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
@@ -50,11 +51,20 @@ export class ProdutosService {
   }
 
   retornaProduto(id: number) {
+
+    this.produtosClone.clear();
+
     this.produtos.forEach(produto => {
+      this.produtosClone.add(produto);
+    });
+
+    this.produtosClone.forEach(produto => {
       if (produto.id == id) {
         this.produto = produto;
       }
     });
+
+    console.log('retornaProduto:',this.produto)
     return this.produto;
   }
 
@@ -83,36 +93,36 @@ export class ProdutosService {
 
   //   this.produtosDsp = JSON.parse(localStorage.getItem('disponivel') || "[]");
   //   if(this.produtosDsp.size==undefined || this.produtosDsp.size==0){
-      // this.produtos.add({
-      //   id: 1,
-      //   nome: "Mouse",
-      //   preco: 20,
-      //   quantidadeEstoque: 4,
-      //   quantidadeCompra: 0,
-      //   descricao: "Mouse óptico para computador, entrada USB.",
-      //   imagem: 'https://img.kalunga.com.br/fotosdeprodutos/436527d.jpg'
+  // this.produtos.add({
+  //   id: 1,
+  //   nome: "Mouse",
+  //   preco: 20,
+  //   quantidadeEstoque: 4,
+  //   quantidadeCompra: 0,
+  //   descricao: "Mouse óptico para computador, entrada USB.",
+  //   imagem: 'https://img.kalunga.com.br/fotosdeprodutos/436527d.jpg'
 
-      // }).add({
+  // }).add({
 
-      //   id: 2,
-      //   nome: "Teclado",
-      //   preco: 35,
-      //   quantidadeEstoque: 2,
-      //   quantidadeCompra: 0,
-      //   descricao: "Teclado para computador, entrada USB.",
-      //   imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
+  //   id: 2,
+  //   nome: "Teclado",
+  //   preco: 35,
+  //   quantidadeEstoque: 2,
+  //   quantidadeCompra: 0,
+  //   descricao: "Teclado para computador, entrada USB.",
+  //   imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
 
-      // }).add({
+  // }).add({
 
-      //   id: 3,
-      //   nome: "Headphone",
-      //   preco: 80.99,
-      //   quantidadeEstoque: 9,
-      //   quantidadeCompra: 0,
-      //   descricao: "Headphone bluetooth.",
-      //   imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
+  //   id: 3,
+  //   nome: "Headphone",
+  //   preco: 80.99,
+  //   quantidadeEstoque: 9,
+  //   quantidadeCompra: 0,
+  //   descricao: "Headphone bluetooth.",
+  //   imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
 
-      // });
+  // });
 
   //   }
   //   else{

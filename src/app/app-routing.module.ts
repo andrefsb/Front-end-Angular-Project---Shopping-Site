@@ -6,7 +6,6 @@ import { ProdutoDetalheComponent } from './carrinho/produto-detalhe/produto-deta
 import { ProdutosComponent } from './carrinho/produtos/produtos.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { UsuarioDetalheComponent } from './usuario-detalhe/usuario-detalhe.component';
 import { MenuUsuariosComponent } from './pages/menu-usuarios/menu-usuarios.component';
