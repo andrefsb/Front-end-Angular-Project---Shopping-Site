@@ -10,16 +10,14 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CadastroUsuarioComponent } from './pages/cadastro-usuario/cadastro-usuario.component';
-import { ProdutosComponent } from './carrinho/produtos/produtos.component';
 import { ProdutoDetalheComponent } from './carrinho/produto-detalhe/produto-detalhe.component';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UsuarioDetalheComponent } from './usuario-detalhe/usuario-detalhe.component';
 import { MenuUsuariosComponent } from './pages/menu-usuarios/menu-usuarios.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
+import { ProdutosDialogModule } from './carrinho/produtos/produtos-dialog/produtos-dialog.module';
+import { ProdutosComponent } from './carrinho/produtos/produtos.component';
+
 
 
 
@@ -49,17 +47,12 @@ component: RoutingComponent
     AppRoutingModule,
     MaterialModule,
     SharedModule,
-    ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
-    MatCheckboxModule,
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    MatFormFieldModule,
-    MatCardModule
-
+    ProdutosDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

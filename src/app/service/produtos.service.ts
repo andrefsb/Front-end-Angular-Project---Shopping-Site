@@ -64,7 +64,7 @@ export class ProdutosService {
       }
     });
 
-    console.log('retornaProduto:',this.produto)
+    console.log('retornaProduto:', this.produto)
     return this.produto;
   }
 
@@ -83,7 +83,13 @@ export class ProdutosService {
   }
 
   delete(produto: Produto) {
-    this.produtos.delete(produto);
+    var deletado = false;
+    this.produtos.forEach(element => {
+      if (element.id == produto.id) {
+        deletado = this.produtos.delete(element);
+      }
+    });
+    console.log('Deletado?', deletado)
   }
 
   removerProdutos(compra: any) {

@@ -1,11 +1,14 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CarrinhoService } from './../../service/carrinho.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import Produto from 'src/app/model/produto';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProdutosService } from 'src/app/service/produtos.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProdutosDialogComponent } from './produtos-dialog/produtos-dialog.component';
+
 
 
 @Component({
@@ -13,14 +16,16 @@ import { ProdutosService } from 'src/app/service/produtos.service';
   templateUrl: './produtos.component.html',
   styleUrls: ['./produtos.component.css']
 })
-export class ProdutosComponent{
+export class ProdutosComponent {
 
 
   total: number = 0;
 
-  produto: Produto = new Produto(0, '', 0, 0, 0, '', '')
+  produto: Produto = new Produto(0, '', 0, 0, 0, '', '');
 
-  produtoCarrinho: Produto = new Produto(0, '', 0, 0, 0, '', '')
+  produtoEdit: Produto = new Produto(0, '', 0, 0, 0, '', '');
+
+  produtoCarrinho: Produto = new Produto(0, '', 0, 0, 0, '', '');
 
   produtosCopia: Produto[] = [];
   produtos: Produto[] = [];
@@ -28,6 +33,9 @@ export class ProdutosComponent{
   produtosCarrinho: Produto[] = [];
   produtosEdit: Produto[] = [];
 
+  passedValues: Produto = new Produto(0, '', 0, 0, 0, '', '');
+  quantidadeEstoque: number = 0;
+  preco: number = 0;
 
   loggedRole: boolean = false;
 
@@ -44,7 +52,7 @@ export class ProdutosComponent{
   colunasExibidas: string[] = ["Nome", "Quantidade em Estoque", "Quantidade no Carrinho", "plus", "minus", "Preco", "Ver"]
   panelOpenState: boolean = false;
 
-  colunasExibidasVendedor: string[] = ["Nome", "Quantidade em Estoque",  "Preco", "Editar", "Ver"]
+  colunasExibidasVendedor: string[] = ["Nome", "Quantidade em Estoque", "Preco", "Editar", "Ver"]
 
   cadastroForm = this.formBuilder.group({
     id: 0,
@@ -66,7 +74,7 @@ export class ProdutosComponent{
     imagem: ''
   });
 
-  constructor(private produtosService: ProdutosService, private authService: AuthService, private formBuilder: FormBuilder, private carrinhoService: CarrinhoService, private router: Router) {
+  constructor(private produtosService: ProdutosService, private authService: AuthService, private formBuilder: FormBuilder, private carrinhoService: CarrinhoService, private router: Router, public dialog: MatDialog) {
     this.subscriptionLoggedRole = this.authService.loggedRoleObservable.subscribe(
       {
         next: (loggedRole) => {
@@ -90,19 +98,19 @@ export class ProdutosComponent{
   // ngOnInit(): void {
 
 
-    //   // if (this.id) {
-    //   //   this.produto = this.produtosService.retornaProduto(this.id);
+  //   // if (this.id) {
+  //   //   this.produto = this.produtosService.retornaProduto(this.id);
 
-    //   //       this.cadastroForm = this.formBuilder.group({
-    //   //         id: this.produto.id,
-    //   //         nome: this.produto.nome,
-    //   //         preco: this.produto.preco,
-    //   //         quantidadeCompra: this.produto.quantidadeCompra,
-    //   //         quantidadeEstoque: this.produto.quantidadeEstoque,
-    //   //         descricao: this.produto.descricao,
-    //   //         imagem: this.produto.imagem
-    //   //       });
-    //   // }
+  //   //       this.cadastroForm = this.formBuilder.group({
+  //   //         id: this.produto.id,
+  //   //         nome: this.produto.nome,
+  //   //         preco: this.produto.preco,
+  //   //         quantidadeCompra: this.produto.quantidadeCompra,
+  //   //         quantidadeEstoque: this.produto.quantidadeEstoque,
+  //   //         descricao: this.produto.descricao,
+  //   //         imagem: this.produto.imagem
+  //   //       });
+  //   // }
   // }
 
   plusProduct(produto: Produto): void {
@@ -154,7 +162,7 @@ export class ProdutosComponent{
 
   validCarrinho() {
     this.produtos = Array.from(this.produtosService.getProdutos());
-    this.produtosClone=[];
+    this.produtosClone = [];
     // console.log('produtos.service produtos:', Array.from(this.produtosService.getProdutos()));
     if (!this.loggedRole) {
       this.produtosClone = this.produtos.map(x => Object.assign({}, x));
@@ -172,7 +180,7 @@ export class ProdutosComponent{
               prodclon.quantidadeEstoque -= prodclon.quantidadeCompra;
             }
           }
-          
+
         });
       });
       // console.log('Clone depois:', this.produtosClone)
@@ -243,6 +251,36 @@ export class ProdutosComponent{
     else {
       alert('Cadastro não realizado! Valor não inserido ou inválido!')
     }
+  }
+
+  openDialog(produto: Produto): void {
+    this.produtoEdit = { ...produto };
+    const dialogRef = this.dialog.open(ProdutosDialogComponent, {
+      width: '260px',
+      data: { quantidadeEstoque: this.produto.quantidadeEstoque, preco: this.produto.preco }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Produto:', produto);
+      console.log('The dialog was closed');
+      console.log('All the data', result);
+      this.produtoEdit = {
+        id: produto.id,
+        nome: produto.nome,
+        preco: +result.preco,
+        quantidadeCompra: produto.quantidadeCompra,
+        quantidadeEstoque: +result.quantidadeEstoque,
+        descricao: produto.descricao,
+        imagem: produto.imagem
+      };
+      console.log('Produto novo:', this.produtoEdit);
+      this.produtosService.delete(produto);
+      console.log('lista antes:',this.produtosService.getProdutos())
+      this.produtosService.post(this.produtoEdit);
+      console.log('lista depois:',this.produtosService.getProdutos())
+      this.produtosEdit = Array.from(this.produtosService.getProdutos()).map(x => Object.assign({}, x));
+
+    });
   }
 
 

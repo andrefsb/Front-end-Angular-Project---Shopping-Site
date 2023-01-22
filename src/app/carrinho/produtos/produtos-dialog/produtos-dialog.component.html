@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Editar</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <p>Nova Quantidade:</p>
+        <input matInput [(ngModel)]="data.quantidadeEstoque">
+    </mat-form-field>
+    <mat-form-field>
+        <p>Novo Preço:</p>
+        <input matInput [(ngModel)]="data.preco">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
