@@ -1,14 +1,16 @@
 import Produto from "./produto";
 
 export default class Carrinho {
-    id: number = 0;
+    data: Date;
+    endereco?: string = "";
     userId: string = "";
     itens: Produto[] = [];
 
-
-    constructor(id: number, userId: string, itens: any) {
-        this.id = id;
+    constructor(data: Date, endereco: string, userId: string, itens: any) {
+        this.data = new Date();
+        this.endereco = endereco;
         this.userId = userId;
         this.itens = itens;
+        
     }
 }

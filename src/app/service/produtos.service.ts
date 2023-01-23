@@ -24,21 +24,56 @@ export class ProdutosService {
 
     id: 2,
     nome: "Teclado",
-    preco: 35,
+    preco: 45,
     quantidadeEstoque: 6,
     quantidadeCompra: 0,
     descricao: "Teclado para computador, entrada USB.",
-    imagem: 'https://m.media-amazon.com/images/I/51nx+6ZS6cL._AC_SL1000_.jpg'
+    imagem: 'https://imgs.extra.com.br/1521784115/1xg.jpg?imwidth=500'
 
   }).add({
 
     id: 3,
     nome: "Headphone",
-    preco: 80.99,
+    preco: 180.99,
     quantidadeEstoque: 5,
     quantidadeCompra: 0,
     descricao: "Headphone bluetooth.",
-    imagem: 'https://m.media-amazon.com/images/I/41NqUMUFHjL._AC_SL1000_.jpg'
+    imagem: 'https://edifier.com.br/pub/media/catalog/product/f/o/fone-de-ouvido-headphone-w820bt-edifier-preto.jpg'
+
+  })
+  .add({
+
+    id: 4,
+    nome: "Monitor",
+    preco: 1080.95,
+    quantidadeEstoque: 9,
+    quantidadeCompra: 0,
+    descricao: "Monitor LCD full HD",
+    imagem: 'https://images.tcdn.com.br/img/img_prod/1066780/monitor_acer_gamer_nitro_23_8_led_full_hd_2x_hdmi_display_port_freesync_165hz_qg241y_5423_3_2b83bbc949d96e96c280cc324f820435.jpg'
+
+  })
+  .add({
+
+    id: 5,
+    nome: "Controle para PC",
+    preco: 48.99,
+    quantidadeEstoque: 12,
+    quantidadeCompra: 0,
+    descricao: "Entrada USB",
+    imagem: 'https://img.kalunga.com.br/fotosdeprodutos/672868z.jpg'
+
+    
+  })
+  .add({
+
+    id: 6,
+    nome: "DVD",
+    preco: 0.99,
+    quantidadeEstoque: 75,
+    quantidadeCompra: 0,
+    descricao: "DVD regravável",
+    imagem: 'https://m.media-amazon.com/images/I/81DBby4O-WL._AC_SY450_.jpg'
+
 
   });
 

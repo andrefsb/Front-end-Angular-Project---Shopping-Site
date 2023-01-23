@@ -1,8 +1,11 @@
 <h3>{{pageName}}</h3>
 
-<li *ngFor="let produto of produtos">
+<div class = "product" *ngFor="let produto of produtos">
+  <img src="{{produto.imagem}}" 
+  alt="{{produto.nome}}" />
     <a routerLink="/produto/{{ produto.id }}">
       {{ produto.nome }}
     </a>
-  </li>
+  </div>
+
 

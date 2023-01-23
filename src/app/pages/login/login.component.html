@@ -1,16 +1,18 @@
-<h3>{{pageName}}</h3>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit();loginForm.reset()">
+<h1>{{pageName}}</h1>
+<div class="login-page">
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit();loginForm.reset()">
     <div for="email">
         <label>E-mail: </label>
-        <input type="email" id="email" formControlName="email" />
+        <input type="email" id="email" placeholder="e-mail" formControlName="email" />
     </div>
 
     <div for="senha">
         <label>Senha: </label>
-        <input type="password" id="senha" formControlName="senha" />
+        <input type="password" placeholder="senha" id="senha" formControlName="senha" />
     </div>
     <br>
-    <button class="button" type="submit">Login</button>
+    <button type="submit">Login</button>
 
 
 </form>
+</div>

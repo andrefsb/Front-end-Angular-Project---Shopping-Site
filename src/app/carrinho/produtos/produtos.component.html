@@ -45,7 +45,8 @@
 
         <ng-container matColumnDef="Preco">
             <th mat-header-cell *matHeaderCellDef>Valor</th>
-            <td mat-cell *matCellDef="let produtoCarrinho">{{produtoCarrinho.preco * produtoCarrinho.quantidadeCompra | currency}}</td>
+            <td mat-cell *matCellDef="let produtoCarrinho">{{produtoCarrinho.preco * produtoCarrinho.quantidadeCompra |
+                currency}}</td>
         </ng-container>
 
         <ng-container matColumnDef="Ver">
@@ -71,12 +72,24 @@
                         {{panelOpenState ? 'Fechar' : 'Abrir'}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
+                <form [formGroup]="enderecoForm">
+                    <div id="endereco">
+                        <label for="endereco"> Endereço: </label>
+                        <input id='textboxid' type="text" id="endereco" formControlName="endereco" /><br>
+                    </div>
+                    <h4> Pagamento para:</h4>
+                    <li>Titular: xxxxxxxxxxxxxx</li>
+                    <li>Banco: xxxxxx-x</li>
+                    <li>Ag: xx</li>
+                    <br>
+                </form>
                 <button class="finalizar-button" (click)="finalizarCompra()">Finalizar</button>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>
 
+<!-- ----------------------------------------------^---USER--------------v---VENDEDOR--------------------------------- -->
 
 <div class='inventario' *ngIf="loggedRole">
     <h2>Inventário</h2>
@@ -120,13 +133,12 @@
                 <button mat-raised-button (click)="openDialog(produto)">
                     Editar
                 </button>
-                <br>  
+                <br>
                 <!-- <span *ngIf="produto">
                     You choose: <i>{{produto}}</i>
                 <span> -->
             </td>
         </ng-container>
-        
 
         <tr mat-header-row *matHeaderRowDef="colunasExibidasVendedor"></tr>
         <tr mat-row *matRowDef="let row; columns: colunasExibidasVendedor;"></tr>
@@ -144,20 +156,23 @@
                         {{panelOpenState ? 'Fechar' : 'Abrir'}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <form [formGroup]="cadastroForm">
-                    <label for="nome"> Nome: </label>
-                    <input type="text" id="nome" formControlName="nome" /><br>
-                    <label for="quantidadeEstoque"> Quantidade em Estoque: </label>
-                    <input type="number" id="quantidadeEstoque" formControlName="quantidadeEstoque" /><br>
-                    <label for="preco"> Preço: </label>
-                    <input type="monetary" id="preco" formControlName="preco" required ng-pattern="/([1-9][0-9]*||[0]*[1-9]+[0-9]*)/"/><br>
-                    <label for="descricao"> Descrição: </label>
-                    <input type="string" id="descricao" formControlName="descricao" /><br>
-                    <label for="imagem"> Link Imagem: </label>
-                    <input type="string" id="imagem" formControlName="imagem" /><br>
-                    <br>
-                    <button class="adicionar-button" (click)="adicionarProduto()">Adicionar</button>
-                </form>
+                <div class="form-style-6">
+                    <form [formGroup]="cadastroForm">
+                        <label for="nome"> Nome: </label>
+                        <input type="text" id="nome" formControlName="nome" /><br>
+                        <label for="quantidadeEstoque"> Quantidade em Estoque: </label>
+                        <input type="number" id="quantidadeEstoque" formControlName="quantidadeEstoque" /><br>
+                        <label for="preco"> Preço: </label>
+                        <input type="monetary" id="preco" formControlName="preco" required
+                            ng-pattern="/([1-9][0-9]*||[0]*[1-9]+[0-9]*)/" /><br>
+                        <label for="descricao"> Descrição: </label>
+                        <input type="string" id="descricao" formControlName="descricao" /><br>
+                        <label for="imagem"> Link Imagem: </label>
+                        <input type="string" id="imagem" formControlName="imagem" /><br>
+                        <br>
+                        <button class="adicionar-button" (click)="adicionarProduto()">Adicionar</button>
+                    </form>
+                </div>
             </mat-expansion-panel>
         </mat-accordion>
     </div>

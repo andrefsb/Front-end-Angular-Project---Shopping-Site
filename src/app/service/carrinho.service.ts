@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import Carrinho from '../model/carrinho';
 import Produto from '../model/produto';
 
 @Injectable({
@@ -12,13 +13,14 @@ export class CarrinhoService {
   produtoCarrinho: Produto = new Produto(0, '', 0, 0, 0, '', '');
   novoCarrinho: Produto[] = [];
   novoProduto: Produto = new Produto(0, '', 0, 0, 0, '', '');
+  minhasCompras: Carrinho[] = [];
 
   constructor() { }
 
 
   getCarrinho(key: string) {
-    console.log('Meu carrinho de getCarrinho: ',JSON.parse(localStorage.getItem(key) || "[]") )
     console.log('Key:',key)
+    console.log('Meu carrinho de getCarrinho: ',JSON.parse(localStorage.getItem(key) || "[]") )
     return JSON.parse(localStorage.getItem(key) || "[]");
   }
 
@@ -56,4 +58,24 @@ export class CarrinhoService {
     // console.log('this.produtoCarrinho',this.produtoCarrinho)
     return this.produtoCarrinho;
   }
+
+  deletarCarrinho(key: string){
+    localStorage.removeItem(key);
+  }
+
+  salvarCompra(key: string, value: any) {
+    
+    this.minhasCompras = this.vizualizarCompras(key);
+    value = JSON.stringify(value);
+    this.minhasCompras.push(value);
+    localStorage.setItem(key, value);
+    console.log('salvar compras local Storage:', key,value)
+  }
+
+  vizualizarCompras(key: string) {
+    console.log('Minhas compras: ',JSON.parse(localStorage.getItem(key) || "[]") )
+    console.log('Key:',key)
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  }
+
 }

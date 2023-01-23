@@ -3,17 +3,17 @@
 
     <div for="nome">
         <label>Nome: </label>
-        <input type="text" id="nome" formControlName="nome" />
+        <input type="text" id="nome" placeholder="nome" formControlName="nome" />
     </div>
 
     <div for="email">
         <label>E-mail: </label>
-        <input type="email" id="email" formControlName="email" />
+        <input type="email" id="email" placeholder="e-mail" formControlName="email" />
     </div>
 
     <div for="senha">
         <label>Senha: </label>
-        <input type="password" id="senha" formControlName="senha" />
+        <input type="password" id="senha" placeholder="senha" formControlName="senha" />
     </div>
 
     <div for="admin" *ngIf="cadastroAuth" >
